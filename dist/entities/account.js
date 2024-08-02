@@ -56,12 +56,12 @@ __decorate([
     __metadata("design:type", String)
 ], Account.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: role_1.Role.USER }),
+    (0, swagger_1.ApiProperty)({ example: [role_1.Role.USER] }),
     (0, typeorm_1.Column)({
         type: 'simple-array',
-        default: role_1.Role.USER,
+        default: [role_1.Role.USER],
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Array)
 ], Account.prototype, "roles", void 0);
 __decorate([
     (0, typeorm_1.BeforeInsert)(),

@@ -26,7 +26,7 @@ let RolesGuard = class RolesGuard {
         if (!user) {
             throw new common_1.ForbiddenException('User not found');
         }
-        const hasRole = () => user.roles.includes(roles);
+        const hasRole = () => user.roles.some((role) => roles.includes(role));
         if (!hasRole()) {
             throw new common_1.ForbiddenException('User does not have required roles');
         }

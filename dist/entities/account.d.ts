@@ -8,6 +8,6 @@ export declare class Account extends CommonAccount {
     phoneNumber: string;
     password: string;
     country: Country;
-    roles: Role;
+    roles: Role[];
     formatEmail(): void;
 }

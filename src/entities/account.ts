@@ -35,12 +35,12 @@ export class Account extends CommonAccount {
   })
   country: Country;
 
-  @ApiProperty({ example: Role.USER })
+  @ApiProperty({ example: [Role.USER] })
   @Column({
     type: 'simple-array',
-    default: Role.USER,
+    default: [Role.USER],
   })
-  roles: Role;
+  roles: Role[];
 
   @BeforeInsert()
   @BeforeUpdate()
