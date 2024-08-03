@@ -87,7 +87,6 @@ let AccountService = AccountService_1 = class AccountService {
         return this.accountRepository.findOneBy({ id });
     }
     update(id, data) {
-        console.log(id, data);
         return this.accountRepository.update(id, { ...data });
     }
     async delete(id) {

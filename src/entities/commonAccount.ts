@@ -3,22 +3,27 @@ import { BeforeInsert, BeforeUpdate, Column } from 'typeorm';
 import { CommonEntity } from './common';
 
 export abstract class CommonAccount extends CommonEntity {
-  @Column('varchar', { name: 'password' })
+  @Column('varchar', { name: 'password', select: false })
   password: string;
 
-  @Column('varchar', { name: 'salt' })
+  @Column('varchar', { name: 'salt', select: false })
   salt: string;
 
-  @Column('varchar', { nullable: true, name: 'refresh_token' })
+  @Column('varchar', { nullable: true, name: 'refresh_token', select: false })
   refreshToken?: string;
 
-  @Column('varchar', { name: 'reset_tokens', default: [], array: true })
+  @Column('varchar', {
+    name: 'reset_tokens',
+    default: [],
+    array: true,
+    select: false,
+  })
   resetTokens: string[];
 
   @Column('int', { name: 'failed_login_attempts', default: 0 })
   failedLoginAttempts: number;
 
-  @Column('timestamp', { nullable: true, name: 'locked_at' })
+  @Column('timestamp', { nullable: true, name: 'locked_at', select: false })
   lockedAt?: Date;
 
   @BeforeInsert()

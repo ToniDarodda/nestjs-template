@@ -118,7 +118,6 @@ export class AccountService {
   }
 
   update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult> {
-    console.log(id, data);
     return this.accountRepository.update(id, { ...data });
   }
 

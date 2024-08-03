@@ -8,8 +8,6 @@ export const AuthToken = createParamDecorator(
 
     const { COOKIE_TOKEN_NAME } = process.env;
 
-    console.log(decodeUserToken(cookies[COOKIE_TOKEN_NAME]));
-
     return decodeUserToken(cookies[COOKIE_TOKEN_NAME]);
   },
 );
