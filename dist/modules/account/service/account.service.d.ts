@@ -5,11 +5,13 @@ import { TokenDto } from 'src/types/auth';
 import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
+import { MailService } from 'src/modules/mail/service/mail/mail.service';
 export declare class AccountService {
     private readonly accountRepository;
     private readonly jwtService;
+    private readonly emailService;
     private readonly logger;
-    constructor(accountRepository: Repository<Account>, jwtService: JwtService);
+    constructor(accountRepository: Repository<Account>, jwtService: JwtService, emailService: MailService);
     refreshToken(token: string): Promise<{
         access_token: string;
     }>;

@@ -6,17 +6,23 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountService } from './service/account.service';
 import { AccountController } from './controller/account.controller';
 import { Account } from 'src/entities/account';
+import { MailService } from '../mail/service/mail/mail.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Account]),
     PassportModule,
-    JwtModule.register({
-      secret: 'your-secret-key',
-      signOptions: { expiresIn: '60m' },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET_KEY'),
+        signOptions: { expiresIn: '500m' },
+      }),
     }),
   ],
-  providers: [AccountService],
+  providers: [AccountService, MailService],
   controllers: [AccountController],
 })
 export class AccountModule {}

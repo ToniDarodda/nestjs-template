@@ -41,12 +41,6 @@ importers:
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
-      cache-manager:
-        specifier: ^5.7.4
-        version: 5.7.4
-      cache-manager-redis-store:
-        specifier: ^3.0.1
-        version: 3.0.1
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -65,6 +59,9 @@ importers:
       mysql2:
         specifier: ^3.11.0
         version: 3.11.0
+      nodemailer:
+        specifier: ^6.9.14
+        version: 6.9.14
       passport:
         specifier: ^0.7.0
         version: 0.7.0
@@ -74,9 +71,6 @@ importers:
       pg:
         specifier: ^8.12.0
         version: 8.12.0
-      redis:
-        specifier: ^4.7.0
-        version: 4.7.0
       reflect-metadata:
         specifier: ^0.2.0
         version: 0.2.2
@@ -111,6 +105,9 @@ importers:
       '@types/node':
         specifier: ^20.3.1
         version: 20.14.14
+      '@types/nodemailer':
+        specifier: ^6.4.15
+        version: 6.4.15
       '@types/supertest':
         specifier: ^6.0.0
         version: 6.0.2
@@ -779,6 +776,9 @@ packages:
   '@types/node@20.14.14':
     resolution: {integrity: sha512-d64f00982fS9YoOgJkAMolK7MN8Iq3TDdVjchbYHdEmjth/DHowx82GnoA+tVUAN+7vxfYUgAzi+JXbKNd2SDQ==}
 
+  '@types/nodemailer@6.4.15':
+    resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
+
   '@types/qs@6.9.15':
     resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
 
@@ -1146,10 +1146,6 @@ packages:
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
-
-  cache-manager-redis-store@3.0.1:
-    resolution: {integrity: sha512-o560kw+dFqusC9lQJhcm6L2F2fMKobJ5af+FoR2PdnMVdpQ3f3Bz6qzvObTGyvoazQJxjQNWgMQeChP4vRTuXQ==}
-    engines: {node: '>= 16.18.0'}
 
   cache-manager@5.7.4:
     resolution: {integrity: sha512-7B29xK1D8hOVdrP0SAy2DGJ/QZxy2TqxS8s2drlLGYI/xOTSJmXfatks7aKKNHvXN6SnKnPtYCi0T82lslB3Fw==}
@@ -2459,6 +2455,10 @@ packages:
 
   node-releases@2.0.18:
     resolution: {integrity: sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==}
+
+  nodemailer@6.9.14:
+    resolution: {integrity: sha512-Dobp/ebDKBvz91sbtRKhcznLThrKxKt97GI2FAlAyy+fk19j73Uz3sBXolVtmcXjaorivqsbbbjDY+Jkt4/bQA==}
+    engines: {node: '>=6.0.0'}
 
   nopt@5.0.0:
     resolution: {integrity: sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ==}
@@ -4062,28 +4062,34 @@ snapshots:
   '@redis/bloom@1.2.0(@redis/client@1.6.0)':
     dependencies:
       '@redis/client': 1.6.0
+    optional: true
 
   '@redis/client@1.6.0':
     dependencies:
       cluster-key-slot: 1.1.2
       generic-pool: 3.9.0
       yallist: 4.0.0
+    optional: true
 
   '@redis/graph@1.1.1(@redis/client@1.6.0)':
     dependencies:
       '@redis/client': 1.6.0
+    optional: true
 
   '@redis/json@1.0.7(@redis/client@1.6.0)':
     dependencies:
       '@redis/client': 1.6.0
+    optional: true
 
   '@redis/search@1.2.0(@redis/client@1.6.0)':
     dependencies:
       '@redis/client': 1.6.0
+    optional: true
 
   '@redis/time-series@1.1.0(@redis/client@1.6.0)':
     dependencies:
       '@redis/client': 1.6.0
+    optional: true
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -4205,6 +4211,10 @@ snapshots:
   '@types/node@20.14.14':
     dependencies:
       undici-types: 5.26.5
+
+  '@types/nodemailer@6.4.15':
+    dependencies:
+      '@types/node': 20.14.14
 
   '@types/qs@6.9.15': {}
 
@@ -4661,10 +4671,6 @@ snapshots:
 
   bytes@3.1.2: {}
 
-  cache-manager-redis-store@3.0.1:
-    dependencies:
-      redis: 4.7.0
-
   cache-manager@5.7.4:
     dependencies:
       eventemitter3: 5.0.1
@@ -4772,7 +4778,8 @@ snapshots:
 
   clone@1.0.4: {}
 
-  cluster-key-slot@1.1.2: {}
+  cluster-key-slot@1.1.2:
+    optional: true
 
   co@4.6.0: {}
 
@@ -5300,7 +5307,8 @@ snapshots:
     dependencies:
       is-property: 1.0.2
 
-  generic-pool@3.9.0: {}
+  generic-pool@3.9.0:
+    optional: true
 
   gensync@1.0.0-beta.2: {}
 
@@ -6174,6 +6182,8 @@ snapshots:
 
   node-releases@2.0.18: {}
 
+  nodemailer@6.9.14: {}
+
   nopt@5.0.0:
     dependencies:
       abbrev: 1.1.1
@@ -6449,6 +6459,7 @@ snapshots:
       '@redis/json': 1.0.7(@redis/client@1.6.0)
       '@redis/search': 1.2.0(@redis/client@1.6.0)
       '@redis/time-series': 1.1.0(@redis/client@1.6.0)
+    optional: true
 
   reflect-metadata@0.2.2: {}
 

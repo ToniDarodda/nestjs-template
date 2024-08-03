@@ -19,10 +19,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_2 = require("typeorm");
 const account_1 = require("../../../entities/account");
+const mail_service_1 = require("../../mail/service/mail/mail.service");
 let AccountService = AccountService_1 = class AccountService {
-    constructor(accountRepository, jwtService) {
+    constructor(accountRepository, jwtService, emailService) {
         this.accountRepository = accountRepository;
         this.jwtService = jwtService;
+        this.emailService = emailService;
         this.logger = new common_1.Logger(AccountService_1.name);
     }
     async refreshToken(token) {
@@ -63,6 +65,7 @@ let AccountService = AccountService_1 = class AccountService {
         const user = this.accountRepository.create(data);
         user.securePassword(data.password);
         await this.accountRepository.save(user);
+        this.emailService.sendMail(data.email, 'Welcome to our service', 'Thank you for signing up!', 'src/templates/welcome.html');
         const tokens = await this.generateTokens(user);
         user.setRefreshToken(tokens.refresh_token);
         await this.accountRepository.save(user);
@@ -100,6 +103,7 @@ exports.AccountService = AccountService = AccountService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(account_1.Account)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        mail_service_1.MailService])
 ], AccountService);
 //# sourceMappingURL=account.service.js.map

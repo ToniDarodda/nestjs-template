@@ -14,6 +14,7 @@ import { JwtPayload, TokenDto } from 'src/types/auth';
 import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
+import { MailService } from 'src/modules/mail/service/mail/mail.service';
 
 @Injectable()
 export class AccountService {
@@ -23,6 +24,7 @@ export class AccountService {
     @InjectRepository(Account)
     private readonly accountRepository: Repository<Account>,
     private readonly jwtService: JwtService,
+    private readonly emailService: MailService,
   ) {}
 
   async refreshToken(token: string): Promise<{ access_token: string }> {
@@ -78,6 +80,13 @@ export class AccountService {
     user.securePassword(data.password);
 
     await this.accountRepository.save(user);
+
+    this.emailService.sendMail(
+      data.email,
+      'Welcome to our service',
+      'Thank you for signing up!',
+      'src/templates/welcome.html',
+    );
 
     const tokens = await this.generateTokens(user);
     user.setRefreshToken(tokens.refresh_token);

@@ -14,6 +14,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const account_service_1 = require("./service/account.service");
 const account_controller_1 = require("./controller/account.controller");
 const account_1 = require("../../entities/account");
+const mail_service_1 = require("../mail/service/mail/mail.service");
+const config_1 = require("@nestjs/config");
 let AccountModule = class AccountModule {
 };
 exports.AccountModule = AccountModule;
@@ -22,12 +24,16 @@ exports.AccountModule = AccountModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([account_1.Account]),
             passport_1.PassportModule,
-            jwt_1.JwtModule.register({
-                secret: 'your-secret-key',
-                signOptions: { expiresIn: '60m' },
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: async (configService) => ({
+                    secret: configService.get('JWT_SECRET_KEY'),
+                    signOptions: { expiresIn: '500m' },
+                }),
             }),
         ],
-        providers: [account_service_1.AccountService],
+        providers: [account_service_1.AccountService, mail_service_1.MailService],
         controllers: [account_controller_1.AccountController],
     })
 ], AccountModule);
