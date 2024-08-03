@@ -1,8 +1,8 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 
-import { Country } from 'src/types/country';
+import { Country } from 'types/country';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from 'src/types/role';
+import { Role } from 'types/role';
 import { CommonAccount } from './commonAccount';
 
 @Entity('account')

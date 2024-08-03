@@ -2,7 +2,7 @@ import type { Response } from 'express';
 import { AccountService } from '../service/account.service';
 import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
-import { DecodedUserToken } from 'src/utils/parseCookie';
+import { DecodedUserToken } from 'utils/parseCookie';
 import { PatchAccountDto } from '../dto/request/patch.dto';
 export declare class AccountController {
     private readonly accountService;

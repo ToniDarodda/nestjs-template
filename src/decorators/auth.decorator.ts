@@ -1,6 +1,6 @@
 import type { ExecutionContext } from '@nestjs/common';
 import { createParamDecorator } from '@nestjs/common';
-import { DecodedUserToken, decodeUserToken } from 'src/utils/parseCookie';
+import { DecodedUserToken, decodeUserToken } from 'utils/parseCookie';
 
 export const AuthToken = createParamDecorator(
   (_data: string, ctx: ExecutionContext): DecodedUserToken => {

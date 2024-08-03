@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Account } from 'src/entities/account';
+import { Account } from 'entities/account';
 export declare const dataSourceOptions: {
     type: never;
     host: string;

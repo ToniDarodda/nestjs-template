@@ -17,12 +17,12 @@ import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AccountService } from '../service/account.service';
 import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
-import { AuthToken } from 'src/decorators/auth.decorator';
-import { DecodedUserToken } from 'src/utils/parseCookie';
-import { JwtAuthGuard } from 'src/guards/auth.guard';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { Role } from 'src/types/role';
-import { Roles } from 'src/decorators/roles.decorator';
+import { AuthToken } from 'decorators/auth.decorator';
+import { DecodedUserToken } from 'utils/parseCookie';
+import { JwtAuthGuard } from 'guards/auth.guard';
+import { RolesGuard } from 'guards/roles.guard';
+import { Role } from 'types/role';
+import { Roles } from 'decorators/roles.decorator';
 import { PatchAccountDto } from '../dto/request/patch.dto';
 
 @ApiTags('Account')

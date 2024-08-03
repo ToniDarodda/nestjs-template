@@ -1,4 +1,4 @@
-import { Country } from 'src/types/country';
+import { Country } from 'types/country';
 export declare class SignUpAccount {
     firstName: string;
     lastName: string;

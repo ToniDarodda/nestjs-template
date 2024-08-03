@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
-import { Account } from 'src/entities/account';
+import { Account } from 'entities/account';
 
 config({ path: '.env.development' });
 
