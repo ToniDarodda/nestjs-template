@@ -65,7 +65,7 @@ let AccountService = AccountService_1 = class AccountService {
         const user = this.accountRepository.create(data);
         user.securePassword(data.password);
         await this.accountRepository.save(user);
-        await this.emailService.sendMail(data.email, 'Welcome to our service', 'Thank you for signing up!', 'src/templates/welcome.html');
+        this.emailService.sendMail(data.email, 'Welcome to our service', 'Thank you for signing up!', 'src/templates/welcome.html');
         const tokens = await this.generateTokens(user);
         user.setRefreshToken(tokens.refresh_token);
         await this.accountRepository.save(user);

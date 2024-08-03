@@ -81,7 +81,7 @@ export class AccountService {
 
     await this.accountRepository.save(user);
 
-    await this.emailService.sendMail(
+    this.emailService.sendMail(
       data.email,
       'Welcome to our service',
       'Thank you for signing up!',
