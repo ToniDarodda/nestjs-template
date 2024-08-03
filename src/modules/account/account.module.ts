@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AccountService } from './service/account.service';
 import { AccountController } from './controller/account.controller';
-import { Account } from 'src/entities/account';
+import { Account } from 'entities/account';
 import { MailService } from '../mail/service/mail/mail.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 

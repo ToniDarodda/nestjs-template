@@ -6,7 +6,7 @@ import {
   IsEnum,
   IsArray,
 } from 'class-validator';
-import { Country } from 'src/types/country';
+import { Country } from 'types/country';
 
 export class SignUpAccount {
   @ApiProperty({ example: 'Toni' })

@@ -1,5 +1,5 @@
-import { Country } from 'src/types/country';
-import { Role } from 'src/types/role';
+import { Country } from 'types/country';
+import { Role } from 'types/role';
 import { CommonAccount } from './commonAccount';
 export declare class Account extends CommonAccount {
     firstName: string;

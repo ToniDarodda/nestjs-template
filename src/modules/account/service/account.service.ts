@@ -9,12 +9,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
-import { Account } from 'src/entities/account';
-import { JwtPayload, TokenDto } from 'src/types/auth';
+import { Account } from 'entities/account';
+import { JwtPayload, TokenDto } from 'types/auth';
 import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
-import { MailService } from 'src/modules/mail/service/mail/mail.service';
+import { MailService } from 'modules/mail/service/mail/mail.service';
 
 @Injectable()
 export class AccountService {
