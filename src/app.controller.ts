@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -7,5 +7,10 @@ export class AppController {
   @Get('health')
   getHealth(): string {
     return 'Healthy';
+  }
+
+  @Get('error-test')
+  getHello(): string {
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 }

@@ -6,6 +6,7 @@ const swagger_1 = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const app_module_1 = require("./app.module");
+const allExceptions_filter_1 = require("./filters/allExceptions.filter");
 const configService = new config_1.ConfigService();
 async function bootstrap() {
     const [FRONTEND_PATH, API_PORT, ORIGIN, SWAGGER_TITLE, SWAGGER_DESCRIPTION, SWAGGER_VERSION,] = [
@@ -33,6 +34,7 @@ async function bootstrap() {
     });
     app.use(cookieParser());
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true }));
+    app.useGlobalFilters(new allExceptions_filter_1.AllExceptionsFilter());
     app.enableVersioning({
         type: common_1.VersioningType.URI,
     });

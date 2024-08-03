@@ -6,6 +6,7 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './filters/allExceptions.filter';
 
 const configService = new ConfigService();
 
@@ -48,6 +49,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableVersioning({
     type: VersioningType.URI,

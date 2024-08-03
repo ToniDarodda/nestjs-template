@@ -16,6 +16,9 @@ let AppController = class AppController {
     getHealth() {
         return 'Healthy';
     }
+    getHello() {
+        throw new common_1.HttpException('Forbidden', common_1.HttpStatus.FORBIDDEN);
+    }
 };
 exports.AppController = AppController;
 __decorate([
@@ -24,6 +27,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], AppController.prototype, "getHealth", null);
+__decorate([
+    (0, common_1.Get)('error-test'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], AppController.prototype, "getHello", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [])
