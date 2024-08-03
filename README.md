@@ -18,18 +18,14 @@ This project is a NestJS template that includes various features such as user ac
   - JWT-based authentication, role-based authorization
 - ✉️ **Email Integration**
   - Send emails using Nodemailer
-- 💾 **Caching**
+- 💾 **Caching** (Next feature)
   - Optimize responses for frequently requested endpoints
-- 🗜️ **Compression**
-  - Middleware to compress HTTP responses
 - ❌ **Centralized Error Handling**
   - Global exception filter to handle all errors consistently
 - ✅ **Input Validation**
   - Validate user inputs using class-validator
 - 📓 **Logging**
   - Log application activities and errors
-- ⚡ **Performance Optimization**
-  - Gain time by removing unnecessary await
 
 ## 🚀 Getting Started
 
