@@ -16,9 +16,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const jwt_1 = require("@nestjs/jwt");
 const typeorm_2 = require("typeorm");
 const account_1 = require("../../../entities/account");
-const jwt_1 = require("@nestjs/jwt");
 let AccountService = AccountService_1 = class AccountService {
     constructor(accountRepository, jwtService) {
         this.accountRepository = accountRepository;
@@ -58,10 +58,11 @@ let AccountService = AccountService_1 = class AccountService {
         const userAlreadyExist = await this.getByMail(data.email);
         if (userAlreadyExist) {
             this.logger.warn(`Attempted to sign up with already taken email: ${data.email}`);
-            throw new common_1.UnprocessableEntityException('Email already taken!');
+            throw new common_1.ConflictException('Email already taken!');
         }
         const user = this.accountRepository.create(data);
         user.securePassword(data.password);
+        await this.accountRepository.save(user);
         const tokens = await this.generateTokens(user);
         user.setRefreshToken(tokens.refresh_token);
         await this.accountRepository.save(user);
@@ -83,9 +84,14 @@ let AccountService = AccountService_1 = class AccountService {
         return this.accountRepository.findOneBy({ id });
     }
     update(id, data) {
-        return this.accountRepository.update(id, data);
+        console.log(id, data);
+        return this.accountRepository.update(id, { ...data });
     }
-    delete(id) {
+    async delete(id) {
+        const account = await this.accountRepository.findOneBy({ id });
+        if (!account) {
+            throw new common_1.NotFoundException('Account not found');
+        }
         return this.accountRepository.softDelete(id);
     }
 };

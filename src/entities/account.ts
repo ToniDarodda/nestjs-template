@@ -37,7 +37,9 @@ export class Account extends CommonAccount {
 
   @ApiProperty({ example: [Role.USER] })
   @Column({
-    type: 'simple-array',
+    type: 'enum',
+    enum: Role,
+    array: true,
     default: [Role.USER],
   })
   roles: Role[];

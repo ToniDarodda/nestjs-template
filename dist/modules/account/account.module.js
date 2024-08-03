@@ -8,12 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountModule = void 0;
 const common_1 = require("@nestjs/common");
-const account_service_1 = require("./service/account.service");
-const account_controller_1 = require("./controller/account.controller");
-const typeorm_1 = require("@nestjs/typeorm");
-const account_1 = require("../../entities/account");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
+const typeorm_1 = require("@nestjs/typeorm");
+const account_service_1 = require("./service/account.service");
+const account_controller_1 = require("./controller/account.controller");
+const account_1 = require("../../entities/account");
 let AccountModule = class AccountModule {
 };
 exports.AccountModule = AccountModule;

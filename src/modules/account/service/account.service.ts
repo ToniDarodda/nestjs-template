@@ -1,17 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Injectable,
   UnauthorizedException,
-  UnprocessableEntityException,
   Logger,
+  ConflictException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { Account } from 'src/entities/account';
-import { SignInAccount } from '../dto/request/signIn.dto';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload, TokenDto } from '../../../types/auth';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+
+import { Account } from 'src/entities/account';
+import { JwtPayload, TokenDto } from 'src/types/auth';
+import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
+import { PatchAccountDto } from '../dto/request/patch.dto';
 
 @Injectable()
 export class AccountService {
@@ -69,11 +71,13 @@ export class AccountService {
       this.logger.warn(
         `Attempted to sign up with already taken email: ${data.email}`,
       );
-      throw new UnprocessableEntityException('Email already taken!');
+      throw new ConflictException('Email already taken!');
     }
 
     const user = this.accountRepository.create(data);
     user.securePassword(data.password);
+
+    await this.accountRepository.save(user);
 
     const tokens = await this.generateTokens(user);
     user.setRefreshToken(tokens.refresh_token);
@@ -104,11 +108,18 @@ export class AccountService {
     return this.accountRepository.findOneBy({ id });
   }
 
-  update(id: Account['id'], data: Partial<Account>): Promise<UpdateResult> {
-    return this.accountRepository.update(id, data);
+  update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult> {
+    console.log(id, data);
+    return this.accountRepository.update(id, { ...data });
   }
 
-  delete(id: Account['id']): Promise<DeleteResult> {
+  async delete(id: Account['id']): Promise<DeleteResult> {
+    const account = await this.accountRepository.findOneBy({ id });
+
+    if (!account) {
+      throw new NotFoundException('Account not found');
+    }
+
     return this.accountRepository.softDelete(id);
   }
 }

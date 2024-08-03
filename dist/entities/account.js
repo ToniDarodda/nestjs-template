@@ -58,7 +58,9 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({ example: [role_1.Role.USER] }),
     (0, typeorm_1.Column)({
-        type: 'simple-array',
+        type: 'enum',
+        enum: role_1.Role,
+        array: true,
         default: [role_1.Role.USER],
     }),
     __metadata("design:type", Array)
