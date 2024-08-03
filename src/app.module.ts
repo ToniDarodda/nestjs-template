@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AccountModule } from './modules/account/account.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 const modules = [DatabaseModule, AccountModule];
 
@@ -14,6 +15,12 @@ const modules = [DatabaseModule, AccountModule];
       cache: true,
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     ...modules,
   ],
   controllers: [AppController],

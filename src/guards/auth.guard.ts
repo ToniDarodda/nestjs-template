@@ -21,17 +21,15 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    const { userId } = decodeUserToken(cookies[COOKIE_TOKEN_NAME]);
+    const { sub } = decodeUserToken(cookies[COOKIE_TOKEN_NAME]);
 
-    const user = await this.accountService.get(userId);
+    const user = await this.accountService.get(sub);
 
     if (!user) {
       throw new UnauthorizedException();
     }
 
     request.user = user;
-
-    console.log('JwtAuthGuard: user', request.user);
 
     return true;
   }

@@ -34,7 +34,6 @@ async function bootstrap() {
     .setTitle(SWAGGER_TITLE)
     .setDescription(SWAGGER_DESCRIPTION)
     .setVersion(SWAGGER_VERSION)
-    .addTag('Building')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

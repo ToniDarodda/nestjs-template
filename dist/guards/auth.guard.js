@@ -24,13 +24,12 @@ let JwtAuthGuard = class JwtAuthGuard {
         if (!cookies[COOKIE_TOKEN_NAME]) {
             throw new common_1.UnauthorizedException();
         }
-        const { userId } = (0, parseCookie_1.decodeUserToken)(cookies[COOKIE_TOKEN_NAME]);
-        const user = await this.accountService.get(userId);
+        const { sub } = (0, parseCookie_1.decodeUserToken)(cookies[COOKIE_TOKEN_NAME]);
+        const user = await this.accountService.get(sub);
         if (!user) {
             throw new common_1.UnauthorizedException();
         }
         request.user = user;
-        console.log('JwtAuthGuard: user', request.user);
         return true;
     }
 };

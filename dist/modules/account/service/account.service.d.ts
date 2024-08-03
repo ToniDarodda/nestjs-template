@@ -1,9 +1,10 @@
+import { JwtService } from '@nestjs/jwt';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Account } from 'src/entities/account';
+import { TokenDto } from 'src/types/auth';
 import { SignInAccount } from '../dto/request/signIn.dto';
-import { JwtService } from '@nestjs/jwt';
-import { TokenDto } from '../../../types/auth';
 import { SignUpAccount } from '../dto/request/signUp.dto';
+import { PatchAccountDto } from '../dto/request/patch.dto';
 export declare class AccountService {
     private readonly accountRepository;
     private readonly jwtService;
@@ -20,6 +21,6 @@ export declare class AccountService {
     private generateTokens;
     getByMail(email: string): Promise<Account>;
     get(id: Account['id']): Promise<Account>;
-    update(id: Account['id'], data: Partial<Account>): Promise<UpdateResult>;
+    update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult>;
     delete(id: Account['id']): Promise<DeleteResult>;
 }

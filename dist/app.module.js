@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const app_controller_1 = require("./app.controller");
 const account_module_1 = require("./modules/account/account.module");
 const database_module_1 = require("./modules/database/database.module");
+const throttler_1 = require("@nestjs/throttler");
 const modules = [database_module_1.DatabaseModule, account_module_1.AccountModule];
 let AppModule = class AppModule {
 };
@@ -24,6 +25,12 @@ exports.AppModule = AppModule = __decorate([
                 cache: true,
                 isGlobal: true,
             }),
+            throttler_1.ThrottlerModule.forRoot([
+                {
+                    ttl: 60000,
+                    limit: 10,
+                },
+            ]),
             ...modules,
         ],
         controllers: [app_controller_1.AppController],

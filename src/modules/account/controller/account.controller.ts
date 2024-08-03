@@ -1,6 +1,19 @@
 import type { Response } from 'express';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
+  Patch,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { AccountService } from '../service/account.service';
 import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
@@ -10,12 +23,27 @@ import { JwtAuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Role } from 'src/types/role';
 import { Roles } from 'src/decorators/roles.decorator';
+import { PatchAccountDto } from '../dto/request/patch.dto';
 
+@ApiTags('Account')
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Post('sign-in')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBody({
+    type: SignInAccount,
+    description: 'Sign in to retrieve user account',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'User signed in successfully',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Invalid credentials, unable to sign in',
+  })
   async signIn(
     @Body() data: SignInAccount,
     @Res({ passthrough: true }) res: Response,
@@ -42,6 +70,19 @@ export class AccountController {
   }
 
   @Post('sign-up')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBody({
+    type: SignUpAccount,
+    description: 'Create a new user account',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'User created successfully',
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'Email or phone number already used',
+  })
   async signUp(
     @Body() data: SignUpAccount,
     @Res({ passthrough: true }) res: Response,
@@ -68,9 +109,58 @@ export class AccountController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'User information retrieved successfully',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User information not found',
+  })
   @Roles(Role.USER)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  get(@AuthToken() { userId }: DecodedUserToken) {
-    return this.accountService.get(userId);
+  get(@AuthToken() { sub }: DecodedUserToken) {
+    return this.accountService.get(sub);
+  }
+
+  @Patch()
+  @HttpCode(HttpStatus.OK)
+  @ApiBody({
+    type: PatchAccountDto,
+    description: 'Update user information',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'User information updated successfully',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User information not found',
+  })
+  @Roles(Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  patch(@AuthToken() { sub }: DecodedUserToken, @Body() data: PatchAccountDto) {
+    return this.accountService.update(sub, data);
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'User information deleted successfully',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User information not found',
+  })
+  @Roles(Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async delete(@AuthToken() { sub }: DecodedUserToken) {
+    try {
+      return await this.accountService.delete(sub);
+    } catch (err) {
+      throw new NotFoundException('User not found');
+    }
   }
 }

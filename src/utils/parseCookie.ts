@@ -2,9 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { UnauthorizedException } from '@nestjs/common';
 
-export interface DecodedUserToken extends jwt.JwtPayload {
-  userId: string;
-}
+export interface DecodedUserToken extends jwt.JwtPayload {}
 
 export const decodeUserToken = (userToken: string): DecodedUserToken => {
   try {
