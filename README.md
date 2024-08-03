@@ -1,5 +1,3 @@
-Sure! Here's the updated README with icons added to the Getting Started, Usage, and Scripts sections:
-
 # NestJS Template
 
 ![NestJS](https://img.shields.io/badge/NestJS-7E1E9C?style=for-the-badge&logo=nestjs&logoColor=white)
