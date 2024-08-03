@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountService } from './service/account.service';
 import { AccountController } from './controller/account.controller';
 import { Account } from 'src/entities/account';
+import { MailService } from '../mail/service/mail/mail.service';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { Account } from 'src/entities/account';
       signOptions: { expiresIn: '60m' },
     }),
   ],
-  providers: [AccountService],
+  providers: [AccountService, MailService],
   controllers: [AccountController],
 })
 export class AccountModule {}

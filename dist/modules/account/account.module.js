@@ -14,6 +14,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const account_service_1 = require("./service/account.service");
 const account_controller_1 = require("./controller/account.controller");
 const account_1 = require("../../entities/account");
+const mail_service_1 = require("../mail/service/mail/mail.service");
 let AccountModule = class AccountModule {
 };
 exports.AccountModule = AccountModule;
@@ -27,7 +28,7 @@ exports.AccountModule = AccountModule = __decorate([
                 signOptions: { expiresIn: '60m' },
             }),
         ],
-        providers: [account_service_1.AccountService],
+        providers: [account_service_1.AccountService, mail_service_1.MailService],
         controllers: [account_controller_1.AccountController],
     })
 ], AccountModule);
