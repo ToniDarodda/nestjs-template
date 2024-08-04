@@ -9,8 +9,15 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TaskModule } from 'modules/task/task.module';
 import { FileModule } from 'modules/file/file.module';
+import { WebSocketModule } from 'modules/web-socket/web-socket.module';
 
-const modules = [DatabaseModule, AccountModule, TaskModule, FileModule];
+const modules = [
+  DatabaseModule,
+  AccountModule,
+  TaskModule,
+  FileModule,
+  WebSocketModule,
+];
 
 @Module({
   imports: [
