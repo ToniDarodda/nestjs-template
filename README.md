@@ -1,3 +1,6 @@
+
+---
+
 # NestJS Template
 
 ![NestJS](https://img.shields.io/badge/NestJS-7E1E9C?style=for-the-badge&logo=nestjs&logoColor=white)
@@ -6,7 +9,7 @@
 ![PNPM](https://img.shields.io/badge/PNPM-4D4D4D?style=for-the-badge&logo=pnpm&logoColor=white)
 ![License](https://img.shields.io/badge/License-UNLICENSED-green?style=for-the-badge)
 
-This project is a NestJS template that includes various features such as user account management, authentication, authorization, email integration, caching, compression, centralized error handling, input validation, and logging.
+This project is a NestJS template that includes various features such as user account management, authentication, authorization, email integration, caching, compression, centralized error handling, input validation, logging, and scheduled tasks.
 
 ## Features
 
@@ -16,7 +19,7 @@ This project is a NestJS template that includes various features such as user ac
   - JWT-based authentication, role-based authorization
 - ✉️ **Email Integration**
   - Send emails using Nodemailer
-- 💾 **Caching** (Next feature)
+- 💾 **Caching**
   - Optimize responses for frequently requested endpoints
 - ❌ **Centralized Error Handling**
   - Global exception filter to handle all errors consistently
@@ -24,6 +27,10 @@ This project is a NestJS template that includes various features such as user ac
   - Validate user inputs using class-validator
 - 📓 **Logging**
   - Log application activities and errors
+- 🗂 **Compression**
+  - Compress HTTP responses to improve performance
+- ⏰ **Scheduled Tasks**
+  - Perform periodic tasks using CRON jobs
 
 ## 🚀 Getting Started
 
@@ -223,3 +230,5 @@ This project is licensed under the UNLICENSED License.
 Feel free to contribute to this project by submitting issues or pull requests.
 
 For any questions or support, please contact [Toni Da Rodda](mailto:toni.da.rodda.dev@gmail.com).
+
+---
