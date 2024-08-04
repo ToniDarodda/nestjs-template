@@ -1,7 +1,8 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
-import { AccountService } from 'modules/account/service/account.service';
+import { Account } from 'entities/account';
+import { Repository } from 'typeorm';
 export declare class JwtAuthGuard implements CanActivate {
-    private readonly accountService;
-    constructor(accountService: AccountService);
+    private readonly accountRepository;
+    constructor(accountRepository: Repository<Account>);
     canActivate(context: ExecutionContext): Promise<boolean>;
 }

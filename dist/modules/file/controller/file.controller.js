@@ -21,6 +21,8 @@ const roles_decorator_1 = require("../../../decorators/roles.decorator");
 const role_1 = require("../../../types/role");
 const file_service_1 = require("../service/file.service");
 const cache_manager_1 = require("@nestjs/cache-manager");
+const auth_guard_1 = require("../../../guards/auth.guard");
+const roles_guard_1 = require("../../../guards/roles.guard");
 let FileController = class FileController {
     constructor(fileService) {
         this.fileService = fileService;
@@ -28,8 +30,8 @@ let FileController = class FileController {
     uploadFile({ sub }, file) {
         return this.fileService.upload(sub, file);
     }
-    getFile({ sub }) {
-        return this.fileService.get(sub);
+    getFile(fileName) {
+        return this.fileService.get(fileName);
     }
 };
 exports.FileController = FileController;
@@ -54,6 +56,7 @@ __decorate([
         description: 'File uploaded successfully',
     }),
     (0, roles_decorator_1.Roles)(role_1.Role.USER),
+    (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __param(0, (0, auth_decorator_1.AuthToken)()),
     __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
@@ -61,7 +64,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], FileController.prototype, "uploadFile", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)(':fileName'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.OK,
@@ -72,11 +75,12 @@ __decorate([
         description: 'User file not found',
     }),
     (0, roles_decorator_1.Roles)(role_1.Role.USER),
+    (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, cache_manager_1.CacheKey)('get_file_key'),
     (0, cache_manager_1.CacheTTL)(5),
-    __param(0, (0, auth_decorator_1.AuthToken)()),
+    __param(0, (0, common_1.Param)('fileName')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], FileController.prototype, "getFile", null);
 exports.FileController = FileController = __decorate([

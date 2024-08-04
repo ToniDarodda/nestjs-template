@@ -1,6 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileService } from './file.service';
 import { ConfigService } from '@nestjs/config';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Account } from 'entities/account';
+
+const mockAccountRepository = () => ({
+  // mock implementation of the repository methods
+});
 
 const mockConfigService = {
   getOrThrow: jest.fn((key: string) => {
@@ -24,6 +30,10 @@ describe('FileService', () => {
         {
           provide: ConfigService,
           useValue: mockConfigService,
+        },
+        {
+          provide: getRepositoryToken(Account),
+          useFactory: mockAccountRepository,
         },
       ],
     }).compile();
