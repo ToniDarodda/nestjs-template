@@ -1,5 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileController } from './file.controller';
+import { FileService } from '../service/file.service';
+
+const mockFileService = {
+  // mock implementation of the FileService methods
+};
 
 describe('FileController', () => {
   let controller: FileController;
@@ -7,6 +12,12 @@ describe('FileController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FileController],
+      providers: [
+        {
+          provide: FileService,
+          useValue: mockFileService,
+        },
+      ],
     }).compile();
 
     controller = module.get<FileController>(FileController);
