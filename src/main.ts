@@ -4,12 +4,12 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import * as compression from 'compression';
 
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './filters/allExceptions.filter';
 
 const configService = new ConfigService();
-
 async function bootstrap() {
   const [
     FRONTEND_PATH,
@@ -47,6 +47,12 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
+
+  app.use(
+    compression({
+      level: 6, // Adjust the compression level as needed
+    }),
+  );
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalFilters(new AllExceptionsFilter());

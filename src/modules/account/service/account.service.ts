@@ -15,6 +15,7 @@ import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
 import { MailService } from 'modules/mail/service/mail/mail.service';
+import { AccountDto } from '../dto/response/account.dto';
 
 @Injectable()
 export class AccountService {
@@ -27,10 +28,17 @@ export class AccountService {
     private readonly emailService: MailService,
   ) {}
 
+  private static toDto(account: Account): AccountDto {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, salt, ...data } = account;
+
+    return { ...data };
+  }
+
   async refreshToken(token: string): Promise<{ access_token: string }> {
     try {
       const payload = this.jwtService.verify(token);
-      const newPayload = { sub: payload.sub, email: payload.email };
+      const newPayload = { sub: payload.sub };
 
       return {
         access_token: await this.jwtService.signAsync(newPayload),
@@ -47,9 +55,15 @@ export class AccountService {
   }: SignInAccount): Promise<{ access_token: string; refresh_token: string }> {
     const user = await this.accountRepository.findOne({ where: { email } });
 
+    if (user.lockedAt !== null)
+      throw new UnauthorizedException('Your account is locked');
+
     if (!user || !user.checkIfPasswordIsValid(password)) {
       if (user) {
         user.failedLoginAttempts += 1;
+        if (user.failedLoginAttempts === 10) {
+          user.lockedAt = new Date(Date.now());
+        }
         await this.accountRepository.save(user);
       }
       this.logger.warn(`Failed login attempt for email: ${email}`);
@@ -109,12 +123,12 @@ export class AccountService {
     };
   }
 
-  getByMail(email: string): Promise<Account> {
+  getByMail(email: string): Promise<AccountDto> {
     return this.accountRepository.findOneBy({ email });
   }
 
-  get(id: Account['id']): Promise<Account> {
-    return this.accountRepository.findOneBy({ id });
+  async get(id: Account['id']): Promise<AccountDto> {
+    return AccountService.toDto(await this.accountRepository.findOneBy({ id }));
   }
 
   update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult> {

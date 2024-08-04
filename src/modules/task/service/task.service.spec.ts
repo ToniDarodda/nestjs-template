@@ -1,36 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AccountService } from './account.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { JwtService } from '@nestjs/jwt';
+import { TaskService } from './task.service';
 import { MailService } from 'modules/mail/service/mail/mail.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { Account } from 'entities/account';
 
 const mockAccountRepository = () => ({
   // mock implementation of the repository methods
 });
 
-const mockJwtService = {
-  // mock implementation of the JwtService methods
-};
-
 const mockMailService = {
   // mock implementation of the MailService methods
 };
 
-describe('AccountService', () => {
-  let service: AccountService;
+describe('TaskService', () => {
+  let service: TaskService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AccountService,
+        TaskService,
         {
           provide: getRepositoryToken(Account),
           useFactory: mockAccountRepository,
-        },
-        {
-          provide: JwtService,
-          useValue: mockJwtService,
         },
         {
           provide: MailService,
@@ -39,7 +30,7 @@ describe('AccountService', () => {
       ],
     }).compile();
 
-    service = module.get<AccountService>(AccountService);
+    service = module.get<TaskService>(TaskService);
   });
 
   it('should be defined', () => {

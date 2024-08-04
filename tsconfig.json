@@ -17,5 +17,14 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "entities/*": ["entities/*"],
+      "decorators/*": ["decorators/*"],
+      "utils/*": ["utils/*"],
+      "guards/*": ["guards/*"],
+      "types/*": ["types/*"]
+    }
   },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

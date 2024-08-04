@@ -3,10 +3,10 @@ import { BeforeInsert, BeforeUpdate, Column } from 'typeorm';
 import { CommonEntity } from './common';
 
 export abstract class CommonAccount extends CommonEntity {
-  @Column('varchar', { name: 'password', select: false })
+  @Column('varchar', { name: 'password' })
   password: string;
 
-  @Column('varchar', { name: 'salt', select: false })
+  @Column('varchar', { name: 'salt' })
   salt: string;
 
   @Column('varchar', { nullable: true, name: 'refresh_token', select: false })
@@ -23,7 +23,7 @@ export abstract class CommonAccount extends CommonEntity {
   @Column('int', { name: 'failed_login_attempts', default: 0 })
   failedLoginAttempts: number;
 
-  @Column('timestamp', { nullable: true, name: 'locked_at', select: false })
+  @Column('timestamp', { nullable: true, name: 'locked_at' })
   lockedAt?: Date;
 
   @BeforeInsert()

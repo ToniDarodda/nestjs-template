@@ -27,10 +27,14 @@ let AccountService = AccountService_1 = class AccountService {
         this.emailService = emailService;
         this.logger = new common_1.Logger(AccountService_1.name);
     }
+    static toDto(account) {
+        const { password, salt, ...data } = account;
+        return { ...data };
+    }
     async refreshToken(token) {
         try {
             const payload = this.jwtService.verify(token);
-            const newPayload = { sub: payload.sub, email: payload.email };
+            const newPayload = { sub: payload.sub };
             return {
                 access_token: await this.jwtService.signAsync(newPayload),
             };
@@ -42,9 +46,14 @@ let AccountService = AccountService_1 = class AccountService {
     }
     async signIn({ email, password, }) {
         const user = await this.accountRepository.findOne({ where: { email } });
+        if (user.lockedAt !== null)
+            throw new common_1.UnauthorizedException('Your account is locked');
         if (!user || !user.checkIfPasswordIsValid(password)) {
             if (user) {
                 user.failedLoginAttempts += 1;
+                if (user.failedLoginAttempts === 10) {
+                    user.lockedAt = new Date(Date.now());
+                }
                 await this.accountRepository.save(user);
             }
             this.logger.warn(`Failed login attempt for email: ${email}`);
@@ -83,8 +92,8 @@ let AccountService = AccountService_1 = class AccountService {
     getByMail(email) {
         return this.accountRepository.findOneBy({ email });
     }
-    get(id) {
-        return this.accountRepository.findOneBy({ id });
+    async get(id) {
+        return AccountService_1.toDto(await this.accountRepository.findOneBy({ id }));
     }
     update(id, data) {
         return this.accountRepository.update(id, { ...data });
