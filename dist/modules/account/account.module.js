@@ -28,7 +28,7 @@ exports.AccountModule = AccountModule = __decorate([
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
                 useFactory: async (configService) => ({
-                    secret: configService.get('JWT_SECRET_KEY'),
+                    secret: configService.getOrThrow('JWT_SECRET_KEY'),
                     signOptions: { expiresIn: '500m' },
                 }),
             }),

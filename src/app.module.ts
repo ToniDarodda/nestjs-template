@@ -8,8 +8,9 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TaskModule } from 'modules/task/task.module';
+import { FileModule } from 'modules/file/file.module';
 
-const modules = [DatabaseModule, AccountModule, TaskModule];
+const modules = [DatabaseModule, AccountModule, TaskModule, FileModule];
 
 @Module({
   imports: [

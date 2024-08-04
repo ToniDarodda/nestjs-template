@@ -8,12 +8,12 @@ const account_1 = require("../entities/account");
 (0, dotenv_1.config)({ path: '.env.development' });
 const configService = new config_1.ConfigService();
 exports.dataSourceOptions = {
-    type: configService.get('TYPE'),
-    host: configService.get('HOST'),
-    port: parseInt(configService.get('PORT'), 10),
-    username: configService.get('USERNAME'),
-    password: configService.get('PASSWORD'),
-    database: configService.get('DATABASE'),
+    type: configService.getOrThrow('TYPE'),
+    host: configService.getOrThrow('HOST'),
+    port: parseInt(configService.getOrThrow('PORT'), 10),
+    username: configService.getOrThrow('USERNAME'),
+    password: configService.getOrThrow('PASSWORD'),
+    database: configService.getOrThrow('DATABASE'),
     entities: [account_1.Account],
     migrations: [__dirname + '/../migrations/*.ts'],
     synchronize: false,

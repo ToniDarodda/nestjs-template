@@ -33,6 +33,6 @@ export class TaskService {
       this.logger.debug(`Mail sent to ${account.email}`);
     });
 
-    this.logger.debug('Called when the current second is 30S');
+    this.logger.debug('Called every 10 minutes');
   }
 }

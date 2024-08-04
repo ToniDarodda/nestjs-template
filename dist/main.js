@@ -11,12 +11,12 @@ const allExceptions_filter_1 = require("./filters/allExceptions.filter");
 const configService = new config_1.ConfigService();
 async function bootstrap() {
     const [FRONTEND_PATH, API_PORT, ORIGIN, SWAGGER_TITLE, SWAGGER_DESCRIPTION, SWAGGER_VERSION,] = [
-        configService.get('FRONTEND_PATH'),
-        configService.get('API_PORT'),
-        configService.get('ORIGIN'),
-        configService.get('SWAGGER_TITLE'),
-        configService.get('SWAGGER_DESCRIPTION'),
-        configService.get('SWAGGER_VERSION'),
+        configService.getOrThrow('FRONTEND_PATH'),
+        configService.getOrThrow('API_PORT'),
+        configService.getOrThrow('ORIGIN'),
+        configService.getOrThrow('SWAGGER_TITLE'),
+        configService.getOrThrow('SWAGGER_DESCRIPTION'),
+        configService.getOrThrow('SWAGGER_VERSION'),
     ];
     const app = await core_1.NestFactory.create(app_module_1.AppModule, {
         logger: ['log', 'fatal', 'error', 'warn', 'debug', 'verbose'],
