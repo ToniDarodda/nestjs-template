@@ -6,12 +6,14 @@ import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
 import { MailService } from 'modules/mail/service/mail/mail.service';
+import { AccountDto } from '../dto/response/account.dto';
 export declare class AccountService {
     private readonly accountRepository;
     private readonly jwtService;
     private readonly emailService;
     private readonly logger;
     constructor(accountRepository: Repository<Account>, jwtService: JwtService, emailService: MailService);
+    private static toDto;
     refreshToken(token: string): Promise<{
         access_token: string;
     }>;
@@ -21,8 +23,8 @@ export declare class AccountService {
     }>;
     signUp(data: SignUpAccount): Promise<TokenDto>;
     private generateTokens;
-    getByMail(email: string): Promise<Account>;
-    get(id: Account['id']): Promise<Account>;
+    getByMail(email: string): Promise<AccountDto>;
+    get(id: Account['id']): Promise<AccountDto>;
     update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult>;
     delete(id: Account['id']): Promise<DeleteResult>;
 }

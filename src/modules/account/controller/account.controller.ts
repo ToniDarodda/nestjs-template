@@ -11,6 +11,7 @@ import {
   Post,
   Res,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -24,9 +25,11 @@ import { RolesGuard } from 'guards/roles.guard';
 import { Role } from 'types/role';
 import { Roles } from 'decorators/roles.decorator';
 import { PatchAccountDto } from '../dto/request/patch.dto';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @ApiTags('Account')
 @Controller('account')
+@UseInterceptors(CacheInterceptor)
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
@@ -119,6 +122,8 @@ export class AccountController {
     description: 'User information not found',
   })
   @Roles(Role.USER)
+  @CacheKey('get_account_key')
+  @CacheTTL(30)
   @UseGuards(JwtAuthGuard, RolesGuard)
   get(@AuthToken() { sub }: DecodedUserToken) {
     return this.accountService.get(sub);

@@ -24,6 +24,7 @@ const roles_guard_1 = require("../../../guards/roles.guard");
 const role_1 = require("../../../types/role");
 const roles_decorator_1 = require("../../../decorators/roles.decorator");
 const patch_dto_1 = require("../dto/request/patch.dto");
+const cache_manager_1 = require("@nestjs/cache-manager");
 let AccountController = class AccountController {
     constructor(accountService) {
         this.accountService = accountService;
@@ -126,6 +127,8 @@ __decorate([
         description: 'User information not found',
     }),
     (0, roles_decorator_1.Roles)(role_1.Role.USER),
+    (0, cache_manager_1.CacheKey)('get_account_key'),
+    (0, cache_manager_1.CacheTTL)(30),
     (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __param(0, (0, auth_decorator_1.AuthToken)()),
     __metadata("design:type", Function),
@@ -176,6 +179,7 @@ __decorate([
 exports.AccountController = AccountController = __decorate([
     (0, swagger_1.ApiTags)('Account'),
     (0, common_1.Controller)('account'),
+    (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
     __metadata("design:paramtypes", [account_service_1.AccountService])
 ], AccountController);
 //# sourceMappingURL=account.controller.js.map

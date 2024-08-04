@@ -9,7 +9,7 @@ export declare class AccountController {
     constructor(accountService: AccountService);
     signIn(data: SignInAccount, res: Response): Promise<void>;
     signUp(data: SignUpAccount, res: Response): Promise<void>;
-    get({ sub }: DecodedUserToken): Promise<import("../../../entities/account").Account>;
+    get({ sub }: DecodedUserToken): Promise<import("../dto/response/account.dto").AccountDto>;
     patch({ sub }: DecodedUserToken, data: PatchAccountDto): Promise<import("typeorm").UpdateResult>;
     delete({ sub }: DecodedUserToken): Promise<import("typeorm").DeleteResult>;
 }
