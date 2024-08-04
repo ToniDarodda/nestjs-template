@@ -34,7 +34,7 @@ let AccountService = AccountService_1 = class AccountService {
     async refreshToken(token) {
         try {
             const payload = this.jwtService.verify(token);
-            const newPayload = { sub: payload.sub, email: payload.email };
+            const newPayload = { sub: payload.sub };
             return {
                 access_token: await this.jwtService.signAsync(newPayload),
             };
