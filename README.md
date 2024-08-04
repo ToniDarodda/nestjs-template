@@ -1,15 +1,14 @@
-
 ---
 
 # NestJS Template
 
 ![NestJS](https://img.shields.io/badge/NestJS-7E1E9C?style=for-the-badge&logo=nestjs&logoColor=white)
-![TypeORM](https://img.shields.io/badge/TypeORM-FF7A59?style=for-the-badge&logo=typescript&logoColor=white)
+![TypeORM](https://img.shields.io/badge/TypeORM-FF7A59?style=for-the-badge&logo=typeorm&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![PNPM](https://img.shields.io/badge/PNPM-4D4D4D?style=for-the-badge&logo=pnpm&logoColor=white)
 ![License](https://img.shields.io/badge/License-UNLICENSED-green?style=for-the-badge)
 
-This project is a NestJS template that includes various features such as user account management, authentication, authorization, email integration, caching, compression, centralized error handling, input validation, logging, and scheduled tasks.
+This project is a NestJS template that includes various features such as user account management, authentication, authorization, email integration, caching, compression, centralized error handling, input validation, logging, scheduled tasks, and file upload to S3.
 
 ## Features
 
@@ -31,6 +30,8 @@ This project is a NestJS template that includes various features such as user ac
   - Compress HTTP responses to improve performance
 - ⏰ **Scheduled Tasks**
   - Perform periodic tasks using CRON jobs
+- 📤 **File Upload to S3**
+  - Upload and retrieve files from Amazon S3
 
 ## 🚀 Getting Started
 
@@ -39,6 +40,7 @@ This project is a NestJS template that includes various features such as user ac
 - Node.js (v14 or higher)
 - PostgreSQL
 - Email service credentials (e.g., Gmail SMTP)
+- AWS S3 credentials for file upload
 
 ### Installation
 
@@ -90,6 +92,11 @@ This project is a NestJS template that includes various features such as user ac
    REFRESH_TOKEN_JWT_VALID=2629746000000
    COOKIE_TOKEN_NAME=template_token
    COOKIE_REFRESH_TOKEN_NAME=template_refresh_token
+
+   S3_REGION=your-region
+   S3_ACCESS_KEY=your-access-key
+   S3_SECRET_KEY=your-secret-key
+   BUCKET=your-bucket-name
    ```
 
 ### Running the Application
@@ -181,6 +188,26 @@ The API documentation is available at `http://localhost:3000/api`.
 
   Requires JWT Authentication and User Role
 
+### File Upload to S3
+
+- **📤 Upload File**
+
+  ```http
+  POST /file/upload
+  ```
+
+  Requires JWT Authentication
+
+  Request Body: Form-data with `file` field
+
+- **📥 Get File**
+
+  ```http
+  GET /file/:fileName
+  ```
+
+  Requires JWT Authentication
+
 ## 🧪 Testing
 
 To run the tests, use the following command:
@@ -212,7 +239,7 @@ This project is licensed under the UNLICENSED License.
 
 ## 👤 Author
 
-[Toni Da Rodda](mailto:toni.da.rodda.dev@gmail.com)
+[Toni Da Rodda](mailto:toni.da.rodda.pro@gmail.com)
 
 ## 🛠️ Icons
 
@@ -229,6 +256,6 @@ This project is licensed under the UNLICENSED License.
 
 Feel free to contribute to this project by submitting issues or pull requests.
 
-For any questions or support, please contact [Toni Da Rodda](mailto:toni.da.rodda.dev@gmail.com).
+For any questions or support, please contact [Toni Da Rodda](mailto:toni.da.rodda.pro@gmail.com).
 
 ---

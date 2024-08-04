@@ -4,12 +4,17 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AccountService } from 'modules/account/service/account.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Account } from 'entities/account';
+import { Repository } from 'typeorm';
 import { decodeUserToken } from 'utils/parseCookie';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly accountService: AccountService) {}
+  constructor(
+    @InjectRepository(Account)
+    private readonly accountRepository: Repository<Account>,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -23,7 +28,7 @@ export class JwtAuthGuard implements CanActivate {
 
     const { sub } = decodeUserToken(cookies[COOKIE_TOKEN_NAME]);
 
-    const user = await this.accountService.get(sub);
+    const user = await this.accountRepository.findOneBy({ id: sub });
 
     if (!user) {
       throw new UnauthorizedException();

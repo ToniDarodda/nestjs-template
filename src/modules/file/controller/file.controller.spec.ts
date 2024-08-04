@@ -1,9 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileController } from './file.controller';
 import { FileService } from '../service/file.service';
+import { JwtAuthGuard } from 'guards/auth.guard';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Account } from 'entities/account';
 
 const mockFileService = {
-  // mock implementation of the FileService methods
+  upload: jest.fn(),
+  get: jest.fn(),
+};
+
+const mockJwtAuthGuard = {
+  canActivate: jest.fn(() => true),
+};
+
+const mockAccountRepository = {
+  findOne: jest.fn(),
 };
 
 describe('FileController', () => {
@@ -17,8 +29,15 @@ describe('FileController', () => {
           provide: FileService,
           useValue: mockFileService,
         },
+        {
+          provide: getRepositoryToken(Account),
+          useValue: mockAccountRepository,
+        },
       ],
-    }).compile();
+    })
+      .overrideGuard(JwtAuthGuard)
+      .useValue(mockJwtAuthGuard)
+      .compile();
 
     controller = module.get<FileController>(FileController);
   });
