@@ -3,8 +3,10 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,6 +17,8 @@ import { Role } from 'types/role';
 import { DecodedUserToken } from 'utils/parseCookie';
 import { FileService } from '../service/file.service';
 import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { JwtAuthGuard } from 'guards/auth.guard';
+import { RolesGuard } from 'guards/roles.guard';
 
 @ApiTags('File')
 @Controller('file')
@@ -41,6 +45,7 @@ export class FileController {
     description: 'File uploaded successfully',
   })
   @Roles(Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   uploadFile(
     @AuthToken() { sub }: DecodedUserToken,
     @UploadedFile() file: Express.Multer.File,
@@ -48,7 +53,7 @@ export class FileController {
     return this.fileService.upload(sub, file);
   }
 
-  @Get()
+  @Get(':fileName')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
@@ -59,9 +64,10 @@ export class FileController {
     description: 'User file not found',
   })
   @Roles(Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @CacheKey('get_file_key')
   @CacheTTL(5)
-  getFile(@AuthToken() { sub }: DecodedUserToken) {
-    return this.fileService.get(sub);
+  getFile(@Param('fileName') fileName: string) {
+    return this.fileService.get(fileName);
   }
 }

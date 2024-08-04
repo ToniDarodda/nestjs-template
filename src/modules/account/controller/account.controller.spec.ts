@@ -1,21 +1,40 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountController } from './account.controller';
 import { AccountService } from '../service/account.service';
-import { CacheInterceptor, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { JwtAuthGuard } from 'guards/auth.guard';
+import { RolesGuard } from 'guards/roles.guard';
 import { Reflector } from '@nestjs/core';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Account } from 'entities/account';
+import { CACHE_MANAGER, CacheInterceptor } from '@nestjs/cache-manager';
 
 const mockAccountService = () => ({
-  // mock implementation of the AccountService methods
+  create: jest.fn(),
+  get: jest.fn(),
+  getByEmail: jest.fn(),
+  patch: jest.fn(),
+  delete: jest.fn(),
 });
 
+const mockJwtAuthGuard = {
+  canActivate: jest.fn(() => true),
+};
+
+const mockRolesGuard = {
+  canActivate: jest.fn(() => true),
+};
+
+const mockAccountRepository = {
+  findOne: jest.fn(),
+};
+
 const mockCacheManager = {
-  // mock implementation of the cache manager methods
+  get: jest.fn(),
+  set: jest.fn(),
 };
 
 describe('AccountController', () => {
   let controller: AccountController;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let service: AccountService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,16 +45,24 @@ describe('AccountController', () => {
           useFactory: mockAccountService,
         },
         {
+          provide: getRepositoryToken(Account),
+          useValue: mockAccountRepository,
+        },
+        {
           provide: CACHE_MANAGER,
           useValue: mockCacheManager,
         },
-        CacheInterceptor,
         Reflector,
+        CacheInterceptor,
       ],
-    }).compile();
+    })
+      .overrideGuard(JwtAuthGuard)
+      .useValue(mockJwtAuthGuard)
+      .overrideGuard(RolesGuard)
+      .useValue(mockRolesGuard)
+      .compile();
 
     controller = module.get<AccountController>(AccountController);
-    service = module.get<AccountService>(AccountService);
   });
 
   it('should be defined', () => {
