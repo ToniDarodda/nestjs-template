@@ -24,12 +24,12 @@ export class TaskService {
     });
 
     accounts.forEach((account: Account) => {
-      // this.emailService.sendMail(
-      //   account.email,
-      //   'Your account is locked cause of too much failed try',
-      //   'Reset your password',
-      //   'src/templates/locked.html',
-      // );
+      this.emailService.sendMail(
+        account.email,
+        'Your account is locked cause of too much failed try',
+        'Reset your password',
+        'src/templates/locked.html',
+      );
       this.logger.debug(`Mail sent to ${account.email}`);
     });
 

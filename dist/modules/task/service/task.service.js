@@ -33,6 +33,7 @@ let TaskService = TaskService_1 = class TaskService {
             },
         });
         accounts.forEach((account) => {
+            this.emailService.sendMail(account.email, 'Your account is locked cause of too much failed try', 'Reset your password', 'src/templates/locked.html');
             this.logger.debug(`Mail sent to ${account.email}`);
         });
         this.logger.debug('Called when the current second is 30S');

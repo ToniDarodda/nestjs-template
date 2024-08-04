@@ -5,6 +5,7 @@ const core_1 = require("@nestjs/core");
 const swagger_1 = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
+const compression = require("compression");
 const app_module_1 = require("./app.module");
 const allExceptions_filter_1 = require("./filters/allExceptions.filter");
 const configService = new config_1.ConfigService();
@@ -33,6 +34,9 @@ async function bootstrap() {
         credentials: true,
     });
     app.use(cookieParser());
+    app.use(compression({
+        level: 6,
+    }));
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true }));
     app.useGlobalFilters(new allExceptions_filter_1.AllExceptionsFilter());
     app.enableVersioning({
