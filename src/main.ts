@@ -19,12 +19,12 @@ async function bootstrap() {
     SWAGGER_DESCRIPTION,
     SWAGGER_VERSION,
   ] = [
-    configService.get<string>('FRONTEND_PATH'),
-    configService.get<string>('API_PORT'),
-    configService.get<string>('ORIGIN'),
-    configService.get<string>('SWAGGER_TITLE'),
-    configService.get<string>('SWAGGER_DESCRIPTION'),
-    configService.get<string>('SWAGGER_VERSION'),
+    configService.getOrThrow<string>('FRONTEND_PATH'),
+    configService.getOrThrow<string>('API_PORT'),
+    configService.getOrThrow<string>('ORIGIN'),
+    configService.getOrThrow<string>('SWAGGER_TITLE'),
+    configService.getOrThrow<string>('SWAGGER_DESCRIPTION'),
+    configService.getOrThrow<string>('SWAGGER_VERSION'),
   ];
 
   const app = await NestFactory.create(AppModule, {

@@ -8,12 +8,12 @@ config({ path: '.env.development' });
 const configService = new ConfigService();
 
 export const dataSourceOptions = {
-  type: configService.get<string>('TYPE') as unknown as never,
-  host: configService.get<string>('HOST'),
-  port: parseInt(configService.get<string>('PORT'), 10),
-  username: configService.get<string>('USERNAME'),
-  password: configService.get<string>('PASSWORD'),
-  database: configService.get<string>('DATABASE'),
+  type: configService.getOrThrow<string>('TYPE') as unknown as never,
+  host: configService.getOrThrow<string>('HOST'),
+  port: parseInt(configService.getOrThrow<string>('PORT'), 10),
+  username: configService.getOrThrow<string>('USERNAME'),
+  password: configService.getOrThrow<string>('PASSWORD'),
+  database: configService.getOrThrow<string>('DATABASE'),
   entities: [Account],
   migrations: [__dirname + '/../migrations/*.ts'],
   synchronize: false,

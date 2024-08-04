@@ -16,7 +16,8 @@ const throttler_1 = require("@nestjs/throttler");
 const cache_manager_1 = require("@nestjs/cache-manager");
 const core_1 = require("@nestjs/core");
 const task_module_1 = require("./modules/task/task.module");
-const modules = [database_module_1.DatabaseModule, account_module_1.AccountModule, task_module_1.TaskModule];
+const file_module_1 = require("./modules/file/file.module");
+const modules = [database_module_1.DatabaseModule, account_module_1.AccountModule, task_module_1.TaskModule, file_module_1.FileModule];
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
