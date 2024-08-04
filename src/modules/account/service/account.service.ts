@@ -55,9 +55,15 @@ export class AccountService {
   }: SignInAccount): Promise<{ access_token: string; refresh_token: string }> {
     const user = await this.accountRepository.findOne({ where: { email } });
 
+    if (user.lockedAt !== null)
+      throw new UnauthorizedException('Your account is locked');
+
     if (!user || !user.checkIfPasswordIsValid(password)) {
       if (user) {
         user.failedLoginAttempts += 1;
+        if (user.failedLoginAttempts === 10) {
+          user.lockedAt = new Date(Date.now());
+        }
         await this.accountRepository.save(user);
       }
       this.logger.warn(`Failed login attempt for email: ${email}`);

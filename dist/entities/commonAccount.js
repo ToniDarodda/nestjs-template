@@ -76,7 +76,7 @@ __decorate([
     __metadata("design:type", Number)
 ], CommonAccount.prototype, "failedLoginAttempts", void 0);
 __decorate([
-    (0, typeorm_1.Column)('timestamp', { nullable: true, name: 'locked_at', select: false }),
+    (0, typeorm_1.Column)('timestamp', { nullable: true, name: 'locked_at' }),
     __metadata("design:type", Date)
 ], CommonAccount.prototype, "lockedAt", void 0);
 __decorate([

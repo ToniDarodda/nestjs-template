@@ -23,7 +23,7 @@ export abstract class CommonAccount extends CommonEntity {
   @Column('int', { name: 'failed_login_attempts', default: 0 })
   failedLoginAttempts: number;
 
-  @Column('timestamp', { nullable: true, name: 'locked_at', select: false })
+  @Column('timestamp', { nullable: true, name: 'locked_at' })
   lockedAt?: Date;
 
   @BeforeInsert()

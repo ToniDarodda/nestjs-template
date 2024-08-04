@@ -7,8 +7,9 @@ import { DatabaseModule } from './modules/database/database.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { TaskModule } from 'modules/task/task.module';
 
-const modules = [DatabaseModule, AccountModule];
+const modules = [DatabaseModule, AccountModule, TaskModule];
 
 @Module({
   imports: [
