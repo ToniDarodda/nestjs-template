@@ -51,11 +51,11 @@ class CommonAccount extends common_1.CommonEntity {
 }
 exports.CommonAccount = CommonAccount;
 __decorate([
-    (0, typeorm_1.Column)('varchar', { name: 'password', select: false }),
+    (0, typeorm_1.Column)('varchar', { name: 'password' }),
     __metadata("design:type", String)
 ], CommonAccount.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { name: 'salt', select: false }),
+    (0, typeorm_1.Column)('varchar', { name: 'salt' }),
     __metadata("design:type", String)
 ], CommonAccount.prototype, "salt", void 0);
 __decorate([

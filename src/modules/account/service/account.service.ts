@@ -15,6 +15,7 @@ import { SignInAccount } from '../dto/request/signIn.dto';
 import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
 import { MailService } from 'modules/mail/service/mail/mail.service';
+import { AccountDto } from '../dto/response/account.dto';
 
 @Injectable()
 export class AccountService {
@@ -26,6 +27,13 @@ export class AccountService {
     private readonly jwtService: JwtService,
     private readonly emailService: MailService,
   ) {}
+
+  private static toDto(account: Account): AccountDto {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, salt, ...data } = account;
+
+    return { ...data };
+  }
 
   async refreshToken(token: string): Promise<{ access_token: string }> {
     try {
@@ -109,12 +117,12 @@ export class AccountService {
     };
   }
 
-  getByMail(email: string): Promise<Account> {
+  getByMail(email: string): Promise<AccountDto> {
     return this.accountRepository.findOneBy({ email });
   }
 
-  get(id: Account['id']): Promise<Account> {
-    return this.accountRepository.findOneBy({ id });
+  async get(id: Account['id']): Promise<AccountDto> {
+    return AccountService.toDto(await this.accountRepository.findOneBy({ id }));
   }
 
   update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult> {

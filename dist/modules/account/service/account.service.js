@@ -27,6 +27,10 @@ let AccountService = AccountService_1 = class AccountService {
         this.emailService = emailService;
         this.logger = new common_1.Logger(AccountService_1.name);
     }
+    static toDto(account) {
+        const { password, salt, ...data } = account;
+        return { ...data };
+    }
     async refreshToken(token) {
         try {
             const payload = this.jwtService.verify(token);
@@ -83,8 +87,8 @@ let AccountService = AccountService_1 = class AccountService {
     getByMail(email) {
         return this.accountRepository.findOneBy({ email });
     }
-    get(id) {
-        return this.accountRepository.findOneBy({ id });
+    async get(id) {
+        return AccountService_1.toDto(await this.accountRepository.findOneBy({ id }));
     }
     update(id, data) {
         return this.accountRepository.update(id, { ...data });
