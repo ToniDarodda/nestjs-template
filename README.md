@@ -6,7 +6,7 @@
 ![TypeORM](https://img.shields.io/badge/TypeORM-FF7A59?style=for-the-badge&logo=typeorm&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![PNPM](https://img.shields.io/badge/PNPM-4D4D4D?style=for-the-badge&logo=pnpm&logoColor=white)
-![License](https://img.shields.io/badge/License-UNLICENSED-green?style=for-the-badge)
+![License](https://img.shields.io/badge/License-LICENSED-green?style=for-the-badge)
 
 This project is a NestJS template that includes various features such as user account management, authentication, authorization, email integration, caching, compression, centralized error handling, input validation, logging, scheduled tasks, and file upload to S3.
 
@@ -57,47 +57,11 @@ This project is a NestJS template that includes various features such as user ac
    pnpm install
    ```
 
-3. Create a `.env` file in the root directory and configure the following environment variables:
-
-   ```env
-   API_PORT=3000
-
-   ORIGIN=*
-   FRONTEND_PATH=http://localhost:3001
-
-   TYPE=postgres
-   HOST=localhost
-   PORT=5432
-   USERNAME=postgres
-   PASSWORD=password
-   DATABASE=template
-
-   PASSWD_ROUNDS=22
-   PASSWD_OUTPUT=22
-
-   EMAIL_HOST=smtp.gmail.com
-   EMAIL_PORT=587
-   EMAIL_SECURE=false
-   EMAIL_USER=toni.da.rodda.dev@gmail.com
-   EMAIL_PASS=your-password
-   EMAIL_FROM=toni.da.rodda.dev@gmail.com
-
-   SWAGGER_TITLE=Template
-   SWAGGER_DESCRIPTION='NestJS Template'
-   SWAGGER_VERSION=0.0.1
-
-   JWT_SECRET_KEY=ObP0k2KeTE!6DyHy0JyctUEyDc2VZLb6Y!SFyFg*tq7Dq8zIl*
-
-   COOKIE_DOMAIN=template
-   REFRESH_TOKEN_JWT_VALID=2629746000000
-   COOKIE_TOKEN_NAME=template_token
-   COOKIE_REFRESH_TOKEN_NAME=template_refresh_token
-
-   S3_REGION=your-region
-   S3_ACCESS_KEY=your-access-key
-   S3_SECRET_KEY=your-secret-key
-   BUCKET=your-bucket-name
+3. Update the `.env` file in the root directory and configure environment variables:
+   ```sh
+     EMAIL_PASS='Your password'
    ```
+
 
 ### Running the Application
 
