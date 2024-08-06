@@ -17,3 +17,4 @@ resources/.arch-internal-preview.css
 */*node_modules
 */dist
 ./dist
+/dist

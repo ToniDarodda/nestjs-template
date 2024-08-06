@@ -35,6 +35,16 @@ export class AccountService {
     return { ...data };
   }
 
+  async isMailAccountAlreadyUsed(email: string): Promise<boolean> {
+    try {
+      const account = await this.accountRepository.findOneBy({ email });
+
+      return !!account;
+    } catch (err) {
+      return false;
+    }
+  }
+
   async refreshToken(token: string): Promise<{ access_token: string }> {
     try {
       const payload = this.jwtService.verify(token);
