@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   NotFoundException,
+  Param,
   Patch,
   Post,
   Res,
@@ -127,6 +128,16 @@ export class AccountController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   get(@AuthToken() { sub }: DecodedUserToken) {
     return this.accountService.get(sub);
+  }
+
+  @Get(':email')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Check if user email already exist',
+  })
+  emailAlreadyExist(@Param('email') email: string) {
+    return this.accountService.isMailAccountAlreadyUsed(email);
   }
 
   @Patch()
