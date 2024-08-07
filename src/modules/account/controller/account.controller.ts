@@ -71,6 +71,8 @@ export class AccountController {
       httpOnly: true,
       expires: new Date(Date.now() + parseInt(REFRESH_TOKEN_JWT_VALID, 10)),
     });
+
+    return { access_token, refresh_token };
   }
 
   @Post('sign-up')
@@ -110,6 +112,8 @@ export class AccountController {
       httpOnly: true,
       expires: new Date(Date.now() + parseInt(REFRESH_TOKEN_JWT_VALID, 10)),
     });
+
+    return { access_token, refresh_token };
   }
 
   @Get()

@@ -50,11 +50,11 @@ async function bootstrap() {
 
   app.use(
     compression({
-      level: 6, // Adjust the compression level as needed
+      level: 6,
     }),
   );
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableVersioning({
