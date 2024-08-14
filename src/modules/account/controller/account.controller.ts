@@ -14,7 +14,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AccountService } from '../service/account.service';
 import { SignInAccount } from '../dto/request/signIn.dto';
@@ -36,6 +36,7 @@ export class AccountController {
 
   @Post('sign-in')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Sign in into account' })
   @ApiBody({
     type: SignInAccount,
     description: 'Sign in to retrieve user account',
@@ -77,6 +78,7 @@ export class AccountController {
 
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Sign up into account' })
   @ApiBody({
     type: SignUpAccount,
     description: 'Create a new user account',
@@ -118,6 +120,7 @@ export class AccountController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Retrieve account information' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'User information retrieved successfully',
@@ -136,6 +139,7 @@ export class AccountController {
 
   @Get(':email')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Retrieve an account by email' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Check if user email already exist',
@@ -146,6 +150,7 @@ export class AccountController {
 
   @Patch()
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update account information' })
   @ApiBody({
     type: PatchAccountDto,
     description: 'Update user information',
@@ -166,6 +171,7 @@ export class AccountController {
 
   @Delete()
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Delete account' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'User information deleted successfully',
