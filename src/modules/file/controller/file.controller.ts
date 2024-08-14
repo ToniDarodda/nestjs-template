@@ -10,7 +10,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthToken } from 'decorators/auth.decorator';
 import { Roles } from 'decorators/roles.decorator';
 import { Role } from 'types/role';
@@ -40,6 +46,7 @@ export class FileController {
       },
     },
   })
+  @ApiOperation({ summary: 'Upload a file on S3' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'File uploaded successfully',
@@ -55,6 +62,7 @@ export class FileController {
 
   @Get(':fileName')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Retrieve a file on S3' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'User file retrieved successfully',
