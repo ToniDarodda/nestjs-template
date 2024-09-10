@@ -16,6 +16,7 @@ import { SignUpAccount } from '../dto/request/signUp.dto';
 import { PatchAccountDto } from '../dto/request/patch.dto';
 import { MailService } from 'modules/mail/service/mail/mail.service';
 import { AccountDto } from '../dto/response/account.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class AccountService {
@@ -27,13 +28,6 @@ export class AccountService {
     private readonly jwtService: JwtService,
     private readonly emailService: MailService,
   ) {}
-
-  private static toDto(account: Account): AccountDto {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, salt, ...data } = account;
-
-    return { ...data };
-  }
 
   async isMailAccountAlreadyUsed(email: string): Promise<boolean> {
     try {
@@ -133,12 +127,20 @@ export class AccountService {
     };
   }
 
-  getByMail(email: string): Promise<AccountDto> {
-    return this.accountRepository.findOneBy({ email });
+  async getByMail(email: string): Promise<AccountDto> {
+    const account = await this.accountRepository.findOneBy({ email });
+
+    return plainToInstance(AccountDto, account, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async get(id: Account['id']): Promise<AccountDto> {
-    return AccountService.toDto(await this.accountRepository.findOneBy({ id }));
+    const account = await this.accountRepository.findOneBy({ id });
+
+    return plainToInstance(AccountDto, account, {
+      excludeExtraneousValues: true,
+    });
   }
 
   update(id: Account['id'], data: PatchAccountDto): Promise<UpdateResult> {

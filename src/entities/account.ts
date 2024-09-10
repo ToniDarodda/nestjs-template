@@ -4,6 +4,7 @@ import { Country } from 'types/country';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from 'types/role';
 import { CommonAccount } from './commonAccount';
+import { Exclude } from 'class-transformer';
 
 @Entity('account')
 export class Account extends CommonAccount {
@@ -25,6 +26,7 @@ export class Account extends CommonAccount {
 
   @ApiProperty({ example: 'po9@cQesP!!D(' })
   @Column('varchar')
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @ApiProperty({ example: Country.FRANCE })

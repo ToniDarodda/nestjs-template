@@ -6,7 +6,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -182,11 +181,7 @@ export class AccountController {
   })
   @Roles(Role.USER)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async delete(@AuthToken() { sub }: DecodedUserToken) {
-    try {
-      return await this.accountService.delete(sub);
-    } catch (err) {
-      throw new NotFoundException('User not found');
-    }
+  delete(@AuthToken() { sub }: DecodedUserToken) {
+    return this.accountService.delete(sub);
   }
 }
